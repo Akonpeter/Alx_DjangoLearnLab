@@ -29,7 +29,7 @@ class Author(models.Model):
 
 
         # Book Serializer
-# ===========================
+
 # Serializes all Book fields.
 # Includes custom validation to 
 # ensure the publication_year is not in the future.
