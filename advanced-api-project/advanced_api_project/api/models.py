@@ -1,5 +1,8 @@
 from django.db import models
 
+# Create your models here.
+from django.db import models
+
 class Author(models.Model):
     name = models.CharField(max_length=100)
 
@@ -18,8 +21,3 @@ class Book(models.Model):
 
     def __str__(self):
         return f"{self.title} ({self.publication_year})"
-
-
-# Each Book is linked to one Author using a ForeignKey.
-# This creates a one-to-many relationship:
-# One Author → Many Books.
