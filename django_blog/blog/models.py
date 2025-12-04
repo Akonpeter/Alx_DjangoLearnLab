@@ -39,3 +39,4 @@ class Post(models.Model):
         ordering = ['-published_date']
         verbose_name = 'Blog Post'
         verbose_name_plural = 'Blog Posts'
+
