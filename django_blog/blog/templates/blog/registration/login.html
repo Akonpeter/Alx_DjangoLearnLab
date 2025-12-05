@@ -1,52 +1,7 @@
-{% extends 'blog/base.html' %}
-
-{% block title %}Login - Django Blog{% endblock %}
+<!-- blog/templates/blog/registration/login.html -->
+{% extends 'blog/home.html' %}
+{% load static %}  <!-- Already loaded in base.html, but optional here -->
 
 {% block content %}
-<div class="auth-container">
-    <div class="auth-card">
-        <h2 class="auth-title">
-            <i class="fas fa-sign-in-alt"></i> Login
-        </h2>
-        
-        <form method="POST" class="auth-form">
-            {% csrf_token %}
-            
-            <div class="form-group">
-                <label for="username">
-                    <i class="fas fa-user"></i> Username
-                </label>
-                <input type="text" name="username" id="username" 
-                       class="form-control" required autofocus>
-            </div>
-            
-            <div class="form-group">
-                <label for="password">
-                    <i class="fas fa-lock"></i> Password
-                </label>
-                <input type="password" name="password" id="password" 
-                       class="form-control" required>
-            </div>
-            
-            <button type="submit" class="btn btn-primary btn-block">
-                <i class="fas fa-sign-in-alt"></i> Login
-            </button>
-            
-            {% if form.errors %}
-                <div class="alert alert-error">
-                    Please enter a correct username and password.
-                </div>
-            {% endif %}
-            
-            <div class="auth-links">
-                <a href="{% url 'password_reset' %}">
-                    <i class="fas fa-key"></i> Forgot Password?
-                </a>
-                <a href="{% url 'register' %}">
-                    <i class="fas fa-user-plus"></i> Create Account
-                </a>
-            </div>
-        </form>
-    </div>
-</div>
+<!-- Your login form -->
 {% endblock %}
