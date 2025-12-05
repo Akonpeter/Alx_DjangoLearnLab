@@ -1,10 +1,45 @@
 {% extends 'blog/base.html' %}
 
+{% block title %}Register - Django Blog{% endblock %}
+
 {% block content %}
-<h2>Register</h2>
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Register</button>
-</form>
+<div class="auth-container">
+    <div class="auth-card">
+        <h2 class="auth-title">
+            <i class="fas fa-user-plus"></i> Create Account
+        </h2>
+        
+        <form method="POST" class="auth-form">
+            {% csrf_token %}
+            
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">
+                        <i class="fas fa-{{ field.name|default:'user' }}"></i>
+                        {{ field.label }}
+                    </label>
+                    {{ field }}
+                    
+                    {% if field.help_text %}
+                        <small class="form-text">{{ field.help_text }}</small>
+                    {% endif %}
+                    
+                    {% for error in field.errors %}
+                        <div class="field-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            
+            <button type="submit" class="btn btn-primary btn-block">
+                <i class="fas fa-user-check"></i> Register
+            </button>
+            
+            <div class="auth-links">
+                <p>Already have an account? 
+                    <a href="{% url 'login' %}">Login here</a>
+                </p>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}
