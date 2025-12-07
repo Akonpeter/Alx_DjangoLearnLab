@@ -33,3 +33,14 @@ class CommentForm(forms.ModelForm):
         if len(content) < 2:
             raise forms.ValidationError("Comment is too short.")
         return content
+
+
+# blog/forms.py
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']
+        widgets = {
+            'content': forms.Textarea(attrs={'rows': 3})
+        }
