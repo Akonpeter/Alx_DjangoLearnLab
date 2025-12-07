@@ -44,3 +44,17 @@ class CommentForm(forms.ModelForm):
         widgets = {
             'content': forms.Textarea(attrs={'rows': 3})
         }
+
+
+# Form for creating and updating comments
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']  # Only content is editable by users
+
+    # Optional: validation
+    def clean_content(self):
+        content = self.cleaned_data.get('content')
+        if not content or content.strip() == "":
+            raise forms.ValidationError("Comment cannot be empty.")
+        return content
