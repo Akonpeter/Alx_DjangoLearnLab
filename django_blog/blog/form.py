@@ -20,31 +20,6 @@ class RegisterForm(forms.ModelForm):
 
 
 
-# Adding Comments
-
-class CommentForm(forms.ModelForm):
-    class Meta:
-        model = Comment
-        fields = ['content']  # Only allow users to enter comment text
-
-    # Optional validation
-    def clean_content(self):
-        content = self.cleaned_data.get('content')
-        if len(content) < 2:
-            raise forms.ValidationError("Comment is too short.")
-        return content
-
-
-# blog/forms.py
-
-class CommentForm(forms.ModelForm):
-    class Meta:
-        model = Comment
-        fields = ['content']
-        widgets = {
-            'content': forms.Textarea(attrs={'rows': 3})
-        }
-
 
 # Form for creating and updating comments
 class CommentForm(forms.ModelForm):
