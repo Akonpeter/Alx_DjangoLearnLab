@@ -1,13 +1,8 @@
-from django.shortcuts import render
-
 from rest_framework import generics, status
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
-from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.authtoken.models import Token
 from django.contrib.auth import login
-from rest_framework import generics, permissions
-from .serializers import UserSerializer
-from .models import CustomUser
 
 from .serializers import (
     UserRegistrationSerializer,
@@ -29,31 +24,20 @@ class LoginView(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        user = serializer.validated_data['user']
+        user = serializer.validated_data["user"]
         login(request, user)
 
-        refresh = RefreshToken.for_user(user)
+        # Retrieve or recreate token
+        token, _ = Token.objects.get_or_create(user=user)
 
         return Response({
-            "success": True,
-            "access": str(refresh.access_token),
-            "refresh": str(refresh),
+            "token": token.key,
             "user": UserSerializer(user).data
         })
 
 
-class GetUserView(generics.RetrieveAPIView):
-    serializer_class = UserSerializer
-
-    def get_object(self):
-        return self.request.user
-
-
-
-
-
 class UserProfileView(generics.RetrieveUpdateAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     serializer_class = UserSerializer
 
     def get_object(self):
