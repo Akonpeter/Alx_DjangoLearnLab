@@ -12,6 +12,7 @@ from rest_framework.response import Response
 from .models import Post
 
 User = get_user_model()
+Post.objects.filter(author__in=following_users).order_by
 
 
 class PostViewSet(viewsets.ModelViewSet):
