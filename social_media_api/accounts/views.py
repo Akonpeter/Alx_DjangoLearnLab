@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import AbstractUser
 from rest_framework import permissions, status
+from .models import CustomUser
 
 # allow users to follow and unfollow others.
 
