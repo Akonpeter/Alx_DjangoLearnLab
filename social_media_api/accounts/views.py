@@ -13,8 +13,9 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 
 User = get_user_model()
+User.objects.all()
 
-
+# Import serializers
 from .serializers import (
     UserRegistrationSerializer,
     LoginSerializer,
