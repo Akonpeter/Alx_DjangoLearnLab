@@ -8,7 +8,8 @@ from .permissions import IsAuthorOrReadOnly
 
 User = get_user_model()
 
-
+def get_object(self):
+        obj = get_object_or_404(Post, pk=self.kwargs['pk'])
 
 #   POST VIEWSET
 
@@ -16,7 +17,9 @@ class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all().order_by('-created_at')
     serializer_class = PostSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly]
-
+     
+     
+     
     # Enable search + ordering
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['title', 'content']
@@ -24,6 +27,8 @@ class PostViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
+
+        
 
 
 
