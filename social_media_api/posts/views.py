@@ -1,7 +1,7 @@
 from rest_framework import viewsets, permissions, filters, generics
 from django.contrib.auth import get_user_model
 from rest_framework.response import Response
-
+from django.shortcuts import get_object_or_404
 from .models import Post, Comment
 from .serializers import PostSerializer, CommentSerializer
 from .permissions import IsAuthorOrReadOnly
