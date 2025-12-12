@@ -53,3 +53,7 @@ class FeedView(generics.ListAPIView):
     def get_queryset(self):
         followed_users = self.request.user.following.all()
         return Post.objects.filter(author__in=followed_users).order_by('-created_at')
+
+["generics.get_object_or_404(Post, pk=pk)",
+  "Like.objects.get_or_create(user=request.user, post=post)",
+  "Notification.objects.create"]
