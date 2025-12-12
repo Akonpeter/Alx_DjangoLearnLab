@@ -5,12 +5,16 @@ from django.contrib.auth.models import AbstractUser
 from rest_framework import permissions, status
 from .models import CustomUser
 
+
 # allow users to follow and unfollow others.
 
 from rest_framework import status, permissions
 from rest_framework.views import APIView
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
+from notifications.models import Notification
+from django.contrib.contenttypes.models import ContentType
+
 
 User = get_user_model()
 CustomUser.objects.all()
@@ -122,4 +126,27 @@ class UnfollowUserView(APIView):
             {"message": f"You have unfollowed {user_to_unfollow.username}."},
             status=status.HTTP_200_OK
         )
+
+# Follow Notifications 
+
+def post(self, request, user_id):
+    user_to_follow = get_object_or_404(CustomUser, id=user_id)
+    user = request.user
+
+    if user == user_to_follow:
+        return Response({"error": "You cannot follow yourself."}, status=400)
+
+    user.following.add(user_to_follow)
+
+    # Notify the user being followed
+    Notification.objects.create(
+        recipient=user_to_follow,
+        actor=user,
+        verb="started following you",
+        target=user,
+        target_content_type=ContentType.objects.get_for_model(user),
+        target_object_id=user.id
+    )
+
+    return Response({"message": "User followed successfully."}, status=200)
 
