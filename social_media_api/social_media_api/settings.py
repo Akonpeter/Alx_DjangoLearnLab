@@ -150,6 +150,7 @@ MEDIA_ROOT = BASE_DIR / 'mediafiles'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
  # Prevent Browser XSS Attack
 SECURE_BROWSER_XSS_FILTER = True
+SECURE_SSL_REDIRECT = True
 
 # Clickjacking Protection
 X_FRAME_OPTIONS = "DENY"
