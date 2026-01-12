@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-6de2+yuwy69n=wim_am=s=1ii=itdgh+wlratfr^92_#wc=-c4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = [www.prizylink.com]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
 
 # Application definition
@@ -96,14 +96,16 @@ WSGI_APPLICATION = 'social_media_api.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES ={
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME':'dblibrary_project',
-        'USER': 'root',
-        'PASSWORD': 'prizy330@',
-        'HOST': 'localhost';
-        'PORT': '3306'
+import os
+
+DATABASES = {
+    "default": {
+        "ENGINE": os.getenv("DB_ENGINE", "django.db.backends.sqlite3"),
+        "NAME": os.getenv("DB_NAME", BASE_DIR / "db.sqlite3"),
+        "USER": os.getenv("DB_USER", ""),
+        "PASSWORD": os.getenv("DB_PASSWORD", ""),
+        "HOST": os.getenv("DB_HOST", ""),
+        "PORT": os.getenv("DB_PORT", ""),
     }
 }
 
@@ -159,3 +161,7 @@ SECURE_SSL_REDIRECT = True
 # Clickjacking Protection
 X_FRAME_OPTIONS = "DENY"
 
+#HTTPS enforcement (production only)
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
